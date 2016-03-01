@@ -35,3 +35,28 @@ $ npm install
 ```
 $ node ./bin/www
 ```
+
+Node should start listening at port 3000. After that run the app in a browser: http://localhost:3000. You should run a few tabs - which will "chat" between themselves. Server doesn't store the messages, only transmits to all connected clients.
+
+## Steps to generate the app
+
+I've used ``yeoman`` (http://yeoman.io/) for scaffolding, which explains why there are some not needed stuff in the files.
+
+```bash
+sudo npm install -g yo
+sudo npm install -g express-generator
+yo
+```
+
+I've selected:
+1. Express generator
+2. Basic version (not MVC)
+3. ``EJS`` view engine (Found it hard to use Jade without practice)
+4. ``Node-Sass`` preprocessor (doesn't matter for this example)
+5. ``Grunt`` build tool
+
+Then I needed to install socket.io:
+
+```bash
+npm install socket.io -S
+```
