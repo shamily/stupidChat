@@ -49,6 +49,7 @@ yo
 ```
 
 I've selected:
+
 1. Express generator
 2. Basic version (not MVC)
 3. ``EJS`` view engine (Found it hard to use Jade without practice)
@@ -59,4 +60,54 @@ Then I needed to install socket.io:
 
 ```bash
 npm install socket.io -S
+```
+
+## Code changes
+
+### ``bin/www``
+
+Added at the end of the file:
+
+```javascript
+var io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+  socket.on('message', function (data) {
+    console.log(data);
+    io.emit('message', { name: data.name, message: data.message });
+  });
+});
+```
+
+### ``views/header.ejs``
+
+Added at the end of the file:
+
+```html
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io('http://localhost:3000');
+
+socket.on('message', function (data) {
+    console.log(data);
+    document.getElementById('chat').innerHTML = data.name + ": " + data.message + "<br>" + document.getElementById('chat').innerHTML;
+});
+
+function sendMessage() {
+    socket.emit('message', { name: document.getElementById('name').value, message: document.getElementById('message').value });
+}
+
+</script>
+```
+
+### ``views/index.ejs``
+
+Added at the body:
+
+```html
+<input id="name" type="text" value="Name" />Your nickname
+<input id="message" type="text" value="type here" /><input type="button" onclick="sendMessage()" value="Message"/>
+<div id="chat"> 
+&nbsp;
+</div>
 ```
