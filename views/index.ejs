@@ -3,8 +3,27 @@
   <h1><%-title %></h1>
   <p>Welcome to <%-title %></p>
 
-<input id="name" type="text" value="Name" />Your nickname
-<input id="message" type="text" value="type here" /><input type="button" onclick="sendMessage()" value="Message"/>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io(window.location.protocol + "//" + window.location.host);
+
+socket.on('message', function (data) {
+    console.log(data);
+    document.getElementById('chat').innerHTML = data.name + ": " + data.message + "<br>" + document.getElementById('chat').innerHTML;
+});
+
+function sendMessage() {
+    socket.emit('message', { name: document.getElementById('name').value, message: document.getElementById('message').value });
+}
+
+</script>
+
+
+
+<input id="name" type="text" value="nickname" /> nickname <br>
+<input id="message" type="text" value="type here" /> <input type="button" onclick="sendMessage()" value="Message"/>
+<hr>
+
 <div id="chat"> 
 &nbsp;
 </div>

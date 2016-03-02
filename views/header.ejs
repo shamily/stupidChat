@@ -8,21 +8,6 @@
   <% if (ENV_DEVELOPMENT) { %>
     <script src="http://localhost:35729/livereload.js"></script>
   <% } %>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-var socket = io('http://localhost:3000');
-
-socket.on('message', function (data) {
-    console.log(data);
-    document.getElementById('chat').innerHTML = data.name + ": " + data.message + "<br>" + document.getElementById('chat').innerHTML;
-});
-
-function sendMessage() {
-    socket.emit('message', { name: document.getElementById('name').value, message: document.getElementById('message').value });
-}
-
-</script>
   
 </head>
 <body>
