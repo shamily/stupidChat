@@ -79,14 +79,14 @@ io.on('connection', function (socket) {
 });
 ```
 
-### ``views/header.ejs``
+### ``views/index.ejs``
 
-Added at the end of the file:
+Added at the body:
 
 ```html
 <script src="/socket.io/socket.io.js"></script>
 <script>
-var socket = io('http://localhost:3000');
+var socket = io(window.location.protocol + "//" + window.location.host);
 
 socket.on('message', function (data) {
     console.log(data);
@@ -96,18 +96,12 @@ socket.on('message', function (data) {
 function sendMessage() {
     socket.emit('message', { name: document.getElementById('name').value, message: document.getElementById('message').value });
 }
-
 </script>
-```
 
-### ``views/index.ejs``
+<input id="name" type="text" value="nickname" /> nickname <br>
+<input id="message" type="text" value="type here" /> <input type="button" onclick="sendMessage()" value="Message"/>
+<hr>
 
-Added at the body:
+<div id="chat"> &nbsp;</div>
 
-```html
-<input id="name" type="text" value="Name" />Your nickname
-<input id="message" type="text" value="type here" /><input type="button" onclick="sendMessage()" value="Message"/>
-<div id="chat"> 
-&nbsp;
-</div>
 ```
